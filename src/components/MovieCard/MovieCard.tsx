@@ -2,10 +2,14 @@ import React, { useEffect } from "react";
 
 interface Props {
   title: string;
+  id: string;
+  onDelete: (id: string) => void;
+  value: string;
+  onChange: (id: string, newValue: string) => void;
 }
 
 const MovieCard: React.FC<Props> = React.memo(
-  ({ title }) => {
+  ({ title, onDelete, id }) => {
     useEffect(() => {
       console.log("[MovieCard] (useEffect) - mount/update");
     }, []);
@@ -26,6 +30,7 @@ const MovieCard: React.FC<Props> = React.memo(
             className="btn btn-outline-secondary"
             type="button"
             id="button-addon2"
+            onClick={() => onDelete(id)}
           >
             X
           </button>
@@ -34,7 +39,9 @@ const MovieCard: React.FC<Props> = React.memo(
     );
   },
   (prevProps, nextProps) => {
-    return prevProps.title === nextProps.title;
+    return (
+      prevProps.title === nextProps.title && prevProps.value === nextProps.value
+    );
   }
 );
 
